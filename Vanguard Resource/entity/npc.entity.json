@@ -1,0 +1,84 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "minecraft:npc",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "npc_1": "textures/entity/npc_1",
+                "npc_2": "textures/entity/npc_2",
+                "npc_3": "textures/entity/npc_3",
+                "npc_4": "textures/entity/npc_4",
+                "npc_5": "textures/entity/npc_5",
+                "npc_6": "textures/entity/npc_6",
+                "npc_7": "textures/entity/npc_7",
+                "npc_8": "textures/entity/npc_8",
+                "npc_9": "textures/entity/npc_9",
+                "npc_10": "textures/entity/npc_10",
+                "npc_11": "textures/entity/npc_11",
+                "npc_12": "textures/entity/npc_12",
+                "npc_13": "textures/entity/npc_13",
+                "npc_14": "textures/entity/npc_14",
+                "npc_15": "textures/entity/npc_15",
+                "npc_16": "textures/entity/npc_16",
+                "npc_17": "textures/entity/npc_17",
+                "npc_18": "textures/entity/npc_18",
+                "npc_19": "textures/entity/npc_19",
+                "npc_20": "textures/entity/npc_20",
+                "npc_21": "textures/entity/npc_21",
+                "npc_22": "textures/entity/npc_22",
+                "npc_23": "textures/entity/npc_23",
+                "npc_24": "textures/entity/npc_24",
+                "npc_25": "textures/entity/npc_25",
+                "npc_26": "textures/entity/npc_26",
+                "npc_27": "textures/entity/npc_27",
+                "npc_28": "textures/entity/npc_28",
+                "npc_29": "textures/entity/npc_29",
+                "npc_30": "textures/entity/npc_30",
+                "npc_31": "textures/entity/npc_31",
+                "npc_32": "textures/entity/npc_32",
+                "npc_33": "textures/entity/npc_33",
+                "npc_34": "textures/entity/npc_34",
+                "npc_35": "textures/entity/npc_35",
+                "npc_36": "textures/entity/npc_36",
+                "npc_37": "textures/entity/npc_37",
+                "npc_38": "textures/entity/npc_38",
+                "npc_39": "textures/entity/npc_39",
+                "npc_40": "textures/entity/npc_40",
+                "npc_41": "textures/entity/npc_41",
+                "npc_42": "textures/entity/npc_42",
+                "npc_43": "textures/entity/npc_43",
+                "npc_44": "textures/entity/npc_44",
+                "npc_45": "textures/entity/npc_45",
+                "npc_46": "textures/entity/npc_46",
+                "npc_47": "textures/entity/npc_47",
+                "npc_48": "textures/entity/npc_48",
+                "npc_49": "textures/entity/npc_49",
+                "npc_50": "textures/entity/npc_50",
+                "npc_51": "textures/entity/npc_51",
+                "npc_52": "textures/entity/npc_52",
+                "npc_53": "textures/entity/npc_53",
+                "npc_54": "textures/entity/npc_54",
+                "npc_55": "textures/entity/npc_55",
+                "npc_56": "textures/entity/npc_56",
+                "npc_57": "textures/entity/npc_57",
+                "npc_58": "textures/entity/npc_58",
+                "npc_59": "textures/entity/npc_59",
+                "npc_60": "textures/entity/npc_60"
+            },
+            "geometry": {
+                "default": "geometry.humanoid.custom"
+            },
+            "render_controllers": [
+                "controller.render.npc"
+            ],
+            "spawn_egg": {
+                "texture": "spawn_egg",
+                "texture_index": 35
+            },
+            "enable_attachables": true
+        }
+    }
+}

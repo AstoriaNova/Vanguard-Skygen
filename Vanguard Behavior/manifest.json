@@ -1,0 +1,37 @@
+{
+  "format_version": 2,
+  "metadata": {
+    "authors": ["vyse xyz"]
+  },
+  "header": {
+    "name": "Vanguard Realm V1.0.4",
+    "description": "Created by Vyse XYZ.",
+    "min_engine_version": [1, 20, 20],
+    "uuid": "5855b7ea-1e4b-4dfb-a3d3-9775f4ca6cf2",
+    "version": [1, 0, 4]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "e8a4a092-89b7-40c9-bcde-805939741f05",
+      "version": [1, 0, 0]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "36e2429f-1cd3-4150-9071-c1e95f3aade2",
+      "entry": "scripts/main.js",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "beta"
+    }
+  ]
+}

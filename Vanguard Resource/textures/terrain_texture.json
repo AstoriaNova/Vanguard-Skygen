@@ -1,0 +1,108 @@
+{
+  "texture_data": {
+    "vanguard:dirt_gen": {
+      "textures": "textures/items/custom/dirt_gen/dirt_gen"
+    },
+    "vanguard:sand_gen": {
+      "textures": "textures/items/custom/sand_gen/sand_gen"
+    },
+    "vanguard:moss_gen": {
+      "textures": "textures/items/custom/moss_gen/moss_gen"
+    },
+    "vanguard:oak_log_gen": {
+      "textures": "textures/items/custom/oak_log_gen/oak_log_gen"
+    },
+    "vanguard:cobblestone_gen": {
+      "textures": "textures/items/custom/cobblestone_gen/cobblestone_gen"
+    },
+    "vanguard:coal_ore_gen": {
+      "textures": "textures/items/custom/coal_ore_gen/coal_ore_gen"
+    },
+    "vanguard:iron_ore_gen": {
+      "textures": "textures/items/custom/iron_ore_gen/iron_ore_gen"
+    },
+    "vanguard:redstone_ore_gen": {
+      "textures": "textures/items/custom/redstone_ore_gen/redstone_ore_gen"
+    },
+    "vanguard:gold_ore_gen": {
+      "textures": "textures/items/custom/gold_ore_gen/gold_ore_gen"
+    },
+    "vanguard:lapis_ore_gen": {
+      "textures": "textures/items/custom/lapis_ore_gen/lapis_ore_gen"
+    },
+    "vanguard:diamond_ore_gen": {
+      "textures": "textures/items/custom/diamond_ore_gen/diamond_ore_gen"
+    },
+    "autominer": {
+      "textures": "textures/blocks/autominer"
+    },
+    "vanguard:emerald_ore_gen": {
+      "textures": "textures/items/custom/emerald_ore_gen/emerald_ore_gen"
+    },
+    "vanguard:ancient_debris_gen": {
+      "textures": "textures/items/custom/ancient_debris_gen/ancient_debris_gen"
+    },
+    "vanguard:iron_block_gen": {
+      "textures": "textures/items/custom/iron_block_gen/iron_block_gen"
+    },
+    "vanguard:gold_block_gen": {
+      "textures": "textures/items/custom/gold_block_gen/gold_block_gen"
+    },
+    "vanguard:diamond_block_gen": {
+      "textures": "textures/items/custom/diamond_block_gen/diamond_block_gen"
+    },
+    "vanguard:emerald_block_gen": {
+      "textures": "textures/items/custom/emerald_block_gen/emerald_block_gen"
+    },
+    "vanguard:netherite_block_gen": {
+      "textures": "textures/items/custom/netherite_block_gen/netherite_block_gen"
+    },
+
+    "vanguard:netherrack_gen": {
+      "textures": "textures/items/custom/netherrack_gen/netherrack_gen"
+    },
+    "vanguard:soul_soil_gen": {
+      "textures": "textures/items/custom/soul_soil_gen/soul_soil_gen"
+    },
+    "vanguard:nether_wart_gen": {
+      "textures": "textures/items/custom/nether_wart_gen/nether_wart_gen"
+    },
+    "vanguard:magma_gen": {
+      "textures": "textures/items/custom/magma_gen/magma_gen"
+    },
+    "vanguard:shroomlight_gen": {
+      "textures": "textures/items/custom/shroomlight_gen/shroomlight_gen"
+    },
+    "vanguard:end_stone_gen": {
+      "textures": "textures/items/custom/end_stone_gen/end_stone_gen"
+    },
+    "vanguard:amethyst_gen": {
+      "textures": "textures/items/custom/amethyst_gen/amethyst_gen"
+    },
+    "vanguard:purpur_gen": {
+      "textures": "textures/items/custom/purpur_gen/purpur_gen"
+    },
+    "vanguard:purpur_pillar_gen": {
+      "textures": "textures/items/custom/purpur_pillar_gen/purpur_pillar_gen"
+    },
+    "vanguard:lodestone_gen": {
+      "textures": "textures/items/custom/lodestone_gen/lodestone_gen"
+    },
+    "vanguard:chiseled_nether_gen": {
+      "textures": "textures/items/custom/chiseled_nether_gen/chiseled_nether_gen"
+    },
+    "vanguard:obsidian_gen": {
+      "textures": "textures/items/custom/obsidian_gen/obsidian_gen"
+    },
+    "vanguard:crying_obsidian_gen": {
+      "textures": "textures/items/custom/crying_obsidian_gen/crying_obsidian_gen"
+    },
+    "vanguard:beacon_gen": {
+      "textures": "textures/items/custom/beacon_gen/beacon_gen"
+    },
+
+    "vanguard:generator_top": {
+      "textures": "textures/items/custom/generator_top"
+    }
+  }
+}

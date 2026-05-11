@@ -1,0 +1,13 @@
+{
+    "format_version" : "1.21.40",
+    "frame": {
+        "blockshape": "invisible",
+        "textures": "itemframe_background",
+        "sound": "itemframe"
+    },
+    "border_block": {
+        "textures": "border_block",
+        "sound": "border_block",
+        "blockshape": "invisible"
+    }
+}

@@ -1,0 +1,120 @@
+{
+  "resource_pack_name": "vanguard_items",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "vanguard:gui": {
+      "textures": "textures/items/gui"
+    },
+    "vanguard:dirt_gen": {
+      "textures": "textures/items/custom/dirt_gen/dirt_gen_icon"
+    },
+    "vanguard:sand_gen": {
+      "textures": "textures/items/custom/sand_gen/sand_gen_icon"
+    },
+    "vanguard:moss_gen": {
+      "textures": "textures/items/custom/moss_gen/moss_gen_icon"
+    },
+    "vanguard:oak_log_gen": {
+      "textures": "textures/items/custom/oak_log_gen/oak_log_gen_icon"
+    },
+    "vanguard:cobblestone_gen": {
+      "textures": "textures/items/custom/cobblestone_gen/cobblestone_gen_icon"
+    },
+    "vanguard:coal_ore_gen": {
+      "textures": "textures/items/custom/coal_ore_gen/coal_ore_gen_icon"
+    },
+    "vanguard:iron_ore_gen": {
+      "textures": "textures/items/custom/iron_ore_gen/iron_ore_gen_icon"
+    },
+    "vanguard:redstone_ore_gen": {
+      "textures": "textures/items/custom/redstone_ore_gen/redstone_ore_gen_icon"
+    },
+    "vanguard:gold_ore_gen": {
+      "textures": "textures/items/custom/gold_ore_gen/gold_ore_gen_icon"
+    },
+    "vanguard:lapis_ore_gen": {
+      "textures": "textures/items/custom/lapis_ore_gen/lapis_ore_gen_icon"
+    },
+    "vanguard:diamond_ore_gen": {
+      "textures": "textures/items/custom/diamond_ore_gen/diamond_ore_gen_icon"
+    },
+    "vanguard:emerald_ore_gen": {
+      "textures": "textures/items/custom/emerald_ore_gen/emerald_ore_gen_icon"
+    },
+    "vanguard:ancient_debris_gen": {
+      "textures": "textures/items/custom/ancient_debris_gen/ancient_debris_gen_icon"
+    },
+    "vanguard:iron_block_gen": {
+      "textures": "textures/items/custom/iron_block_gen/iron_block_gen_icon"
+    },
+    "vanguard:gold_block_gen": {
+      "textures": "textures/items/custom/gold_block_gen/gold_block_gen_icon"
+    },
+    "vanguard:diamond_block_gen": {
+      "textures": "textures/items/custom/diamond_block_gen/diamond_block_gen_icon"
+    },
+    "vanguard:emerald_block_gen": {
+      "textures": "textures/items/custom/emerald_block_gen/emerald_block_gen_icon"
+    },
+    "vanguard:netherite_block_gen": {
+      "textures": "textures/items/custom/netherite_block_gen/netherite_block_gen_icon"
+    },
+
+    "vanguard:netherrack_gen": {
+      "textures": "textures/items/custom/netherrack_gen/netherrack_gen_icon"
+    },
+    "vanguard:soul_soil_gen": {
+      "textures": "textures/items/custom/soul_soil_gen/soul_soil_gen_icon"
+    },
+    "vanguard:nether_wart_gen": {
+      "textures": "textures/items/custom/nether_wart_gen/nether_wart_gen_icon"
+    },
+    "vanguard:magma_gen": {
+      "textures": "textures/items/custom/magma_gen/magma_gen_icon"
+    },
+    "vanguard:shroomlight_gen": {
+      "textures": "textures/items/custom/shroomlight_gen/shroomlight_gen_icon"
+    },
+    "vanguard:end_stone_gen": {
+      "textures": "textures/items/custom/end_stone_gen/end_stone_gen_icon"
+    },
+    "vanguard:amethyst_gen": {
+      "textures": "textures/items/custom/amethyst_gen/amethyst_gen_icon"
+    },
+    "vanguard:purpur_gen": {
+      "textures": "textures/items/custom/purpur_gen/purpur_gen_icon"
+    },
+    "vanguard:purpur_pillar_gen": {
+      "textures": "textures/items/custom/purpur_pillar_gen/purpur_pillar_gen_icon"
+    },
+    "vanguard:lodestone_gen": {
+      "textures": "textures/items/custom/lodestone_gen/lodestone_gen_icon"
+    },
+    "vanguard:chiseled_nether_gen": {
+      "textures": "textures/items/custom/chiseled_nether_gen/chiseled_nether_gen_icon"
+    },
+    "vanguard:obsidian_gen": {
+      "textures": "textures/items/custom/obsidian_gen/obsidian_gen_icon"
+    },
+    "vanguard:crying_obsidian_gen": {
+      "textures": "textures/items/custom/crying_obsidian_gen/crying_obsidian_gen_icon"
+    },
+    "vanguard:beacon_gen": {
+      "textures": "textures/items/custom/beacon_gen/beacon_gen_icon"
+    },
+
+    "vanguard:autominer": {
+      "textures": "textures/items/custom/autominer"
+    },
+
+    "vanguard:uncommon_key": {
+      "textures": "textures/items/keys/uncommon_key"
+    },
+    "vanguard:common_key": {
+      "textures": "textures/items/keys/common_key"
+    },
+    "vanguard:rare_key": {
+      "textures": "textures/items/keys/rare_key"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:item": {
+    "description": {
+      "identifier": "vanguard:moss_gen",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "vanguard:moss_gen",
+
+      "minecraft:glint": true,
+      "minecraft:max_stack_size": 16,
+
+      "minecraft:display_name": {
+        "value": "§r§l§bMoss Generator\n§r§7[ Place ]"
+      },
+
+      "minecraft:foil": true,
+
+      "minecraft:block_placer": {
+        "block": "vanguard:moss_gen"
+      }
+    }
+  }
+}

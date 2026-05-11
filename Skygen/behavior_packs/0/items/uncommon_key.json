@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:item": {
+    "description": {
+      "identifier": "vanguard:uncommon_key",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "vanguard:uncommon_key",
+
+      "minecraft:glint": true,
+      "minecraft:max_stack_size": 16,
+
+      "minecraft:display_name": {
+        "value": "§r§l§7Uncommon Key\n§r§7[ Place ]"
+      },
+
+      "minecraft:foil": true
+    }
+  }
+}

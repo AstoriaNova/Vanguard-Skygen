@@ -1,0 +1,20 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:item": {
+    "description": {
+      "identifier": "vanguard:gui",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "vanguard:gui",
+      "minecraft:glint": true,
+      "minecraft:max_stack_size": 1,
+      "minecraft:display_name": {
+        "value": "\u00a7r\u00a7l\u00a7bVanguard GUI\n\u00a7r\u00a77[ click ]"
+      },
+      "minecraft:foil": true
+    }
+  }
+}

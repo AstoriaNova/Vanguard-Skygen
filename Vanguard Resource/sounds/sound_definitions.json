@@ -1,0 +1,41 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "random.click": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/click",
+          "volume": 2
+        }
+      ]
+    },
+    "ui.big_claim": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/bigClaim",
+          "volume": 2
+        }
+      ]
+    },
+    "ui.claim": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/claim",
+          "volume": 2
+        }
+      ]
+    },
+    "ui.unlock": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/unlock",
+          "volume": 2
+        }
+      ]
+    }
+  }
+}

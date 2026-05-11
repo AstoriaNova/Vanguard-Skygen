@@ -1,0 +1,8 @@
+[
+  {
+    "flipbook_texture": "textures/blocks/autominer",
+    "atlas_tile": "autominer",
+    "frames": [0, 1, 2, 3],
+    "ticks_per_frame": 5
+  }
+]

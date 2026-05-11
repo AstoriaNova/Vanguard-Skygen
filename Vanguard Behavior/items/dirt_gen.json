@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:item": {
+    "description": {
+      "identifier": "vanguard:dirt_gen",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "vanguard:dirt_gen",
+
+      "minecraft:glint": true,
+      "minecraft:max_stack_size": 16,
+
+      "minecraft:display_name": {
+        "value": "§r§l§bDirt Generator\n§r§7[ Place ]"
+      },
+
+      "minecraft:foil": true,
+
+      "minecraft:block_placer": {
+        "block": "vanguard:dirt_gen"
+      }
+    }
+  }
+}

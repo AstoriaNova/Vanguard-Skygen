@@ -1,0 +1,100 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "vanguard:moss_gen",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "vanguard:speed": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:map_color": "#6b4f2a",
+      "minecraft:light_dampening": 0,
+      "minecraft:light_emission": 4,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 15
+      },
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:material_instances": {
+        "up": {
+          "texture": "vanguard:generator_top"
+        },
+        "down": {
+          "texture": "vanguard:moss_gen"
+        },
+        "north": {
+          "texture": "vanguard:moss_gen"
+        },
+        "east": {
+          "texture": "vanguard:moss_gen"
+        },
+        "south": {
+          "texture": "vanguard:moss_gen"
+        },
+        "west": {
+          "texture": "vanguard:moss_gen"
+        }
+      },
+      "vanguard:moss_gen_component": {}
+    },
+    "permutations": [
+      {
+        "condition": "query.block_state('vanguard:speed') == 0",
+        "components": {
+          "minecraft:tick": {
+            "interval_range": [
+              20,
+              20
+            ],
+            "looping": true
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('vanguard:speed') == 1",
+        "components": {
+          "minecraft:tick": {
+            "interval_range": [
+              15,
+              15
+            ],
+            "looping": true
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('vanguard:speed') == 2",
+        "components": {
+          "minecraft:tick": {
+            "interval_range": [
+              10,
+              10
+            ],
+            "looping": true
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('vanguard:speed') == 3",
+        "components": {
+          "minecraft:tick": {
+            "interval_range": [
+              5,
+              5
+            ],
+            "looping": true
+          }
+        }
+      }
+    ]
+  }
+}

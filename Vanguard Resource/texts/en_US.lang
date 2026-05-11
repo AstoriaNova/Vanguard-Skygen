@@ -1,0 +1,35 @@
+map.position=§3%s§r§l§b | §r§3%s§r§l§b | §r§3%s
+
+gui.submit=§b§lSubmit
+
+container.enderchest=§r
+
+multiplayer.player.joined= §a%s
+multiplayer.player.joined.realms= §a%s
+multiplayer.player.left= §c%s
+multiplayer.player.left.realms= §c%s
+
+progressScreen.title.loading=§3§lVanguard SkyGen
+
+profileScreen.header=§3Dressing Room
+
+pauseScreen.gameIsPaused=§3Game is paused
+pauseScreen.invite=§bCreated by Vyse
+
+menu.profile=§3Profile
+
+hostOption.setWorldSpawn=§3Set World Spawn
+hostOption.teleport=§3Teleport
+hostOption.teleport.who=§3Who
+hostOption.teleport.where=§3Where
+hostOption.time=§3Time
+hostOption.time.day=§3Day
+hostOption.time.midnight=§3Midnight
+hostOption.time.noon=§3Noon
+hostOption.time.night=§3Night
+hostOption.time.sunrise=§3Sunrise
+hostOption.time.sunset=§3Sunset
+hostOption.weather=§3Weather
+hostOption.weather.clear=§3Clear
+hostOption.weather.rain=§3Rain
+hostOption.weather.thunderstorm=§3Thunderstorm

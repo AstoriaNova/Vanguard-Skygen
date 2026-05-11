@@ -1,0 +1,300 @@
+{
+    "namespace": "hud",
+    "hud_title_text": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "$show_ui": "§r§r",
+        "size": [
+            "100%cm",
+            "100%c"
+        ],
+        "offset": [
+            -5,
+            -30
+        ],
+        "anchor_from": "right_middle",
+        "anchor_to": "right_middle",
+        "alpha": 1,
+        "controls": [
+            {
+                "sidebar": {
+                    "type": "panel",
+                    "size": [
+                        "100%c",
+                        "100%c"
+                    ],
+                    "controls": [
+                        {
+                            "title_background": {
+                                "type": "image",
+                                "size": [
+                                    "100%c - 75px",
+                                    "100%c"
+                                ],
+                                "alpha": 0.5,
+                                "texture": "textures/ui/hud_tip_text_background",
+                                "controls": [
+                                    {
+                                        "title": {
+                                            "type": "label",
+                                            "text": "$title_text",
+                                            "offset": [
+                                                0,
+                                                15
+                                            ],
+                                            "alpha": 1,
+                                            "layer": 1,
+                                            "anchor_from": "center",
+                                            "anchor_to": "center",
+                                            "color": "$tool_tip_text",
+                                            "shadow": true,
+                                            "localize": false,
+                                            "font_size": "medium",
+                                            "font_scale_factor": 0.75,
+                                            "controls": [
+                                                {
+                                                    "subtitle_background": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            "100%c + 12px",
+                                                            "100%c + 8px"
+                                                        ],
+                                                        "offset": [
+                                                            -1,
+                                                            "150%c + 15px"
+                                                        ],
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "texture": "textures/ui/hud_tip_text_background",
+                                                        "alpha": 0.5,
+                                                        "controls": [
+                                                            {
+                                                                "subtitle": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "center",
+                                                                    "anchor_to": "center",
+                                                                    "color": "$title_command_text_color",
+                                                                    "text": "$subtitle_text",
+                                                                    "layer": 1,
+                                                                    "alpha": 1,
+                                                                    "localize": false,
+                                                                    "shadow": true,
+                                                                    "font_size": "medium",
+                                                                    "font_scale_factor": 0.65,
+                                                                    "text_alignment": "left"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "bindings": [
+                                                            {
+                                                                "binding_name": "#hud_subtitle_text_string"
+                                                            },
+                                                            {
+                                                                "binding_type": "view",
+                                                                "source_property_name": "(not (#hud_subtitle_text_string = ''))",
+                                                                "target_property_name": "#visible"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "main_logo_sidebar": {
+                                            "type": "image",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "texture": "textures/ui/logo",
+                                            "size": [
+                                                90,
+                                                45
+                                            ],
+                                            "layer": 50
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "bindings": [
+            {
+                "binding_name": "#hud_title_text_string",
+                "binding_type": "global"
+            },
+            {
+                "source_property_name": "(not ((#hud_title_text_string - $show_ui) = #hud_title_text_string)))",
+                "binding_type": "view",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+    "hud_actionbar_text": {
+        "type": "image",
+        "size": [
+            "100%c + 7px",
+            "100%c + 7px"
+        ],
+        "offset": [
+            10,
+            40
+        ],
+        "texture": "textures/ui/hud_tip_text_background",
+        "alpha": {
+            "anim_type": "alpha",
+            "easing": "in_expo",
+            "duration": 5,
+            "from": 0.5,
+            "to": 0,
+            "destroy_at_end": "hud_actionbar_text"
+        },
+        "anchor_from": "left_middle",
+        "anchor_to": "left_middle",
+        "controls": [
+            {
+                "actionbar_message": {
+                    "type": "label",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "color": "$tool_tip_text",
+                    "layer": 30,
+                    "text": "$actionbar_text",
+                    "localize": false,
+                    "alpha": {
+                        "anim_type": "alpha",
+                        "easing": "in_expo",
+                        "duration": 5,
+                        "from": 1,
+                        "to": 0
+                    },
+                    "font_size": "medium",
+                    "font_scale_factor": 0.75,
+                    "text_alignment": "left"
+                }
+            }
+        ]
+    },
+    "mob_effects_renderer": {
+        "ignored": true
+    },
+    "chat_label": {
+        "enable_profanity_filter": false,
+        "max_size": [
+            "100% - 8px",
+            "100%c"
+        ]
+    },
+    "chat_panel": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            "100%",
+            "100%c"
+        ],
+        "controls": [
+            {
+                "stack_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
+                    "factory": {
+                        "name": "chat_item_factory",
+                        "max_children_size": 5,
+                        "control_ids": {
+                            "chat_item": "chat_item@hud.chat_grid_item"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "anim_chat_txt_wait": {
+        "anim_type": "wait",
+        "duration": 5,
+        "next": "@hud.anim_chat_txt_alpha"
+    },
+    "anim_chat_txt_alpha": {
+        "anim_type": "offset",
+        "easing": "out_cubic",
+        "from": [
+            5,
+            5
+        ],
+        "to": [
+            -300,
+            5
+        ],
+        "duration": 0.25,
+        "destroy_at_end": "chat_grid_item"
+    },
+    "chat_grid_item": {
+        "type": "panel",
+        "layer": 1,
+        "size": [
+            "100%",
+            "100%c"
+        ],
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "controls": [
+            {
+                "padding": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        5
+                    ]
+                }
+            },
+            {
+                "chat_background": {
+                    "type": "image",
+                    "texture": "textures/ui/hud_tip_text_background",
+                    "size": [
+                        "100% + 8px",
+                        "100%c + 3px"
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": {
+                        "anim_type": "offset",
+                        "easing": "out_cubic",
+                        "from": [
+                            -300,
+                            5
+                        ],
+                        "to": [
+                            5,
+                            5
+                        ],
+                        "duration": 0.5
+                    },
+                    "alpha": 0.5,
+                    "anims": [
+                        "@hud.anim_chat_txt_wait"
+                    ],
+                    "controls": [
+                        {
+                            "chat_text@chat_label": {}
+                        }
+                    ],
+                    "bindings": [
+                        {
+                            "binding_name": "#chat_text",
+                            "binding_name_override": "#text",
+                            "binding_type": "collection",
+                            "binding_collection_name": "chat_text_grid",
+                            "binding_condition": "once"
+                        },
+                        {
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
