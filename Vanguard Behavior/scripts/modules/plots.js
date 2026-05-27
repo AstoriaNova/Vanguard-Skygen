@@ -335,7 +335,7 @@ export class Plots {
             rotation = "180_degrees";
         }
 
-        system.run(() => {
+        system.run(async () => {
             await world.tickingAreaManager.createTickingArea(tickingAreaName, {
                 dimension: dim,
                 from: from,
@@ -451,7 +451,7 @@ export class Plots {
         const structureName = `mystructure:${plot.owner_id}_plot`
         const from = { x: minX, y: minY, z: minZ };
         const to = { x: maxX, y: maxY, z: maxZ };
-        system.run(() => {
+        system.run(async () => {
             await world.tickingAreaManager.createTickingArea(tickingAreaName, {
                 dimension: dim,
                 from: from,
@@ -541,7 +541,7 @@ export class Plots {
         const from = { x: minX, y: minY, z: minZ };
         const to = { x: maxX, y: maxY, z: maxZ };
 
-        system.run(() => {
+        system.run(async () => {
             await world.tickingAreaManager.createTickingArea(tickingAreaName, {
                 dimension: dim,
                 from: from,
@@ -1163,6 +1163,7 @@ export class Plots {
         if (isOwner && canUnload) {
             if (selection === buttonIndex++) {
                 await this.unloadPlotOWNER(plotId, player)
+                player.sendMessage("§aUnloaded Plot")
                 return;
             }
         }
