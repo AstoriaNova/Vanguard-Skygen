@@ -360,46 +360,6 @@ export class Plots {
             world.setDynamicProperty("active_plots", JSON.stringify(activeplots));
         }
 
-        this.fillAreaAPI(
-            dim,
-            {
-                x: plotConfig.plotCords.from.x,
-                y: plotConfig.plotCords.from.y + 99,
-                z: plotConfig.plotCords.from.z
-            },
-            {
-                x: plotConfig.plotCords.to.x,
-                y: plotConfig.plotCords.to.y + 1,
-                z: plotConfig.plotCords.to.z
-            },
-            "minecraft:barrier"
-        );
-
-        this.fillAreaAPI(dim,
-            {
-                x: plotConfig.closePlotCords.from.x,
-                y: plotConfig.closePlotCords.from.y,
-                z: plotConfig.closePlotCords.from.z
-            },
-            {
-                x: plotConfig.closePlotCords.to.x,
-                y: plotConfig.closePlotCords.to.y - 213,
-                z: plotConfig.closePlotCords.to.z
-            },
-            "minecraft:structure_void"
-        );
-
-        this.fillAreaAPI(
-            dim,
-            {
-                x: plotConfig.closePlotCords.from.x,
-                y: plotConfig.closePlotCords.from.y + 6,
-                z: plotConfig.closePlotCords.from.z
-            },
-            plotConfig.closePlotCords.to,
-            "minecraft:barrier"
-        );
-
         this.updateFloatingText(plotKey, plot);
         player.sendSuccess(`§aPlot loaded at ${plotKey}.`);
         return true;
@@ -470,11 +430,7 @@ export class Plots {
                     saveMode: StructureSaveMode.World
                 }
             )
-            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-            this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
-            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            world.structureManager.place(`mystructure:default_plot`, dim, from)
             this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
             world.tickingAreaManager.removeTickingArea(tickingAreaName)
         });
@@ -559,11 +515,7 @@ export class Plots {
                     saveMode: StructureSaveMode.World
                 }
             )
-            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-            this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
-            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            world.structureManager.place(`mystructure:default_plot`, dim, from)
             this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
             world.tickingAreaManager.removeTickingArea(tickingAreaName)
         });
@@ -950,51 +902,11 @@ export class Plots {
 
     static isPointInside(loc, from, to) {
         return loc.x >= Math.min(from.x, to.x) && loc.x <= Math.max(from.x, to.x) &&
-            loc.y >= Math.min(from.y, to.y) && loc.y <= Math.max(from.y, to.y) &&
             loc.z >= Math.min(from.z, to.z) && loc.z <= Math.max(from.z, to.z);
     }
 
     static minMax(a, b) {
         return [Math.min(a, b), Math.max(a, b)];
-    }
-
-    static fillAreaAPI(dim, from, to, block, parts = 6) {
-        const minX = Math.min(from.x, to.x);
-        const maxX = Math.max(from.x, to.x);
-        const minY = Math.max(Math.min(from.y, to.y), -64);
-        const maxY = Math.min(Math.max(from.y, to.y), 300);
-        const minZ = Math.min(from.z, to.z);
-        const maxZ = Math.max(from.z, to.z);
-        const totalWidth = maxX - minX + 1;
-
-        for (let i = 0; i < parts; i++) {
-            const startX = minX + Math.ceil((totalWidth / parts) * i);
-            let endX = minX + Math.ceil((totalWidth / parts) * (i + 1)) - 1;
-            if (i === parts - 1 || endX > maxX) endX = maxX;
-            if (startX > maxX) break;
-
-            try {
-                dim.fillBlocks(
-                    new BlockVolume(
-                        { x: startX, y: minY, z: minZ },
-                        { x: endX, y: maxY, z: maxZ }
-                    ),
-                    block
-                );
-            } catch { }
-        }
-    }
-
-    static setGrassFloorAPI(dim, from, to) {
-        const [minX, maxX] = this.minMax(from.x, to.x);
-        const [minZ, maxZ] = this.minMax(from.z, to.z);
-        const y = Math.min(from.y, to.y);
-        try {
-            dim.fillBlocks(
-                new BlockVolume({ x: minX, y, z: minZ }, { x: maxX, y, z: maxZ }),
-                "minecraft:grass_block"
-            );
-        } catch { }
     }
 
     static setFloatingText(dim, tag, text) {
