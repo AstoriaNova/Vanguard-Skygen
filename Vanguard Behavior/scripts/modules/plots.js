@@ -342,6 +342,7 @@ export class Plots {
                 to: to
             })
             world.structureManager.place(structureName, dim, from)
+            world.tickingAreaManager.removeTickingArea(tickingAreaName)
         });
 
         plot.claimed_plot = plotKey;
@@ -400,7 +401,6 @@ export class Plots {
         );
 
         this.updateFloatingText(plotKey, plot);
-        world.tickingAreaManager.removeTickingArea(tickingAreaName)
         player.sendSuccess(`§aPlot loaded at ${plotKey}.`);
         return true;
     }
