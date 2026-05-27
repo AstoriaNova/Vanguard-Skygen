@@ -635,7 +635,6 @@ export class Plots {
         target.sendSuccess(`§aYou were added to ${plot.owner_name}'s plot.`);
     }
 
-
     static removeTeammate(player, plotId, targetPlayer) {
         const plot = this.getPlot(plotId);
         if (!plot) return;
