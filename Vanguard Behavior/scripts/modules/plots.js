@@ -162,7 +162,7 @@ export const plots = {
     },
 };
 
-import { world, system, BlockVolume, GameMode, ItemStack, TimeOfDay, EntityDamageCause } from "@minecraft/server";
+import { world, system, BlockVolume, GameMode, ItemStack, TimeOfDay, EntityDamageCause, StructureSaveMode } from "@minecraft/server";
 import { ModalFormData, ActionFormData } from "@minecraft/server-ui";
 import "../protos/main";
 
@@ -275,134 +275,135 @@ export class Plots {
         return teammate.perms[action] === true;
     }
 
-static loadPlot(plotId, player, plotKey) {
-    const plot = this.getPlot(plotId);
-    if (!plot) {
-        player.sendError("Plot not found.");
-        return false;
-    }
+    static loadPlot(plotId, player, plotKey) {
+        const plot = this.getPlot(plotId);
+        if (!plot) {
+            player.sendError("Plot not found.");
+            return false;
+        }
 
-    const plotConfig = plots[plotKey];
+        const plotConfig = plots[plotKey];
 
-    // Check if player is owner
-    const isOwner = plot.owner_id === player.id;
-    
-    // Check if player is teammate with load permissions
-    const teammate = plot.teammates?.find(t => t.player_id === player.id);
-    const hasLoadPermission = teammate?.perms?.load === true;
+        const isOwner = plot.owner_id === player.id;
 
-    // If not owner and doesn't have load permission, deny access
-    if (!isOwner && !hasLoadPermission) {
-        player.sendError("You don't have permission to load this plot.");
-        return false;
-    }
+        const teammate = plot.teammates?.find(t => t.player_id === player.id);
+        const hasLoadPermission = teammate?.perms?.load === true;
 
-    if (activeplots.includes(plotId)) {
-        console.warn(`[LOAD] Plot ${plotId} already in activeplots, teleporting instead`);
-        player.teleport(plotConfig.entrance);
-        player.sendSuccess("Teleported to plot entrance.");
+        if (!isOwner && !hasLoadPermission) {
+            player.sendError("You don't have permission to load this plot.");
+            return false;
+        }
+
+        if (activeplots.includes(plotId)) {
+            console.warn(`[LOAD] Plot ${plotId} already in activeplots, teleporting instead`);
+            player.teleport(plotConfig.entrance);
+            player.sendSuccess("Teleported to plot entrance.");
+            return true;
+        }
+
+        const myPlotId = this.getMyPlot(player);
+        const teamPlotId = this.getTeammatePlot(player);
+
+        if (myPlotId && activeplots.includes(myPlotId)) {
+            player.sendError("You already have your plot loaded. Unload it first.");
+            return false;
+        }
+
+        if (teamPlotId && activeplots.includes(teamPlotId)) {
+            player.sendError("You already have a teammate's plot loaded. Unload it first.");
+            return false;
+        }
+
+        const dim = world.getDimension("overworld");
+
+        const plotNumber = parseInt(plotKey.split("_")[1]);
+        const isTargetFlipped = plotNumber >= 14 && plotNumber <= 23;
+        const flippedDB = JSON.parse(world.getDynamicProperty("plots_flipped") || "{}");
+        const wasSavedFlipped = flippedDB[plot.owner_id];
+        const tickingAreaName = `load_${plotId}}`;
+        const structureName = `mystructure:${plot.owner_id}_plot`
+        const minX = Math.min(plotConfig.plotCords.from.x, plotConfig.plotCords.to.x);
+        const minY = Math.min(plotConfig.plotCords.from.y, plotConfig.plotCords.to.y);
+        const minZ = Math.min(plotConfig.plotCords.from.z, plotConfig.plotCords.to.z);
+        const maxX = Math.max(plotConfig.plotCords.from.x, plotConfig.plotCords.to.x);
+        const maxY = Math.max(plotConfig.plotCords.from.y, plotConfig.plotCords.to.y);
+        const maxZ = Math.max(plotConfig.plotCords.from.z, plotConfig.plotCords.to.z);
+        const from = { x: minX, y: minY, z: minZ };
+        const to = { x: maxX, y: maxY, z: maxZ };
+        let rotation = "0_degrees";
+        if (wasSavedFlipped !== undefined && isTargetFlipped !== wasSavedFlipped) {
+            rotation = "180_degrees";
+        }
+
+        system.run(() => {
+            await world.tickingAreaManager.createTickingArea(tickingAreaName, {
+                dimension: dim,
+                from: from,
+                to: to
+            })
+            world.structureManager.place(structureName, dim, from)
+        });
+
+        plot.claimed_plot = plotKey;
+        plot.last_loaded = Date.now();
+        this.setPlot(plotId, plot);
+
+        if (plot.owner_id === player.id) {
+            this.setMyPlot(player, plotId);
+        } else {
+            this.setTeammatePlot(player, plotId);
+        }
+
+        if (!activeplots.includes(plotId)) {
+            activeplots.push(plotId);
+            world.setDynamicProperty("active_plots", JSON.stringify(activeplots));
+        }
+
+        this.fillAreaAPI(
+            dim,
+            {
+                x: plotConfig.plotCords.from.x,
+                y: plotConfig.plotCords.from.y + 99,
+                z: plotConfig.plotCords.from.z
+            },
+            {
+                x: plotConfig.plotCords.to.x,
+                y: plotConfig.plotCords.to.y + 1,
+                z: plotConfig.plotCords.to.z
+            },
+            "minecraft:barrier"
+        );
+
+        this.fillAreaAPI(dim,
+            {
+                x: plotConfig.closePlotCords.from.x,
+                y: plotConfig.closePlotCords.from.y,
+                z: plotConfig.closePlotCords.from.z
+            },
+            {
+                x: plotConfig.closePlotCords.to.x,
+                y: plotConfig.closePlotCords.to.y - 213,
+                z: plotConfig.closePlotCords.to.z
+            },
+            "minecraft:structure_void"
+        );
+
+        this.fillAreaAPI(
+            dim,
+            {
+                x: plotConfig.closePlotCords.from.x,
+                y: plotConfig.closePlotCords.from.y + 6,
+                z: plotConfig.closePlotCords.from.z
+            },
+            plotConfig.closePlotCords.to,
+            "minecraft:barrier"
+        );
+
+        this.updateFloatingText(plotKey, plot);
+
+        player.sendSuccess(`§aPlot loaded at ${plotKey}.`);
         return true;
     }
-
-    const myPlotId = this.getMyPlot(player);
-    const teamPlotId = this.getTeammatePlot(player);
-
-    if (myPlotId && activeplots.includes(myPlotId)) {
-        player.sendError("You already have your plot loaded. Unload it first.");
-        return false;
-    }
-
-    if (teamPlotId && activeplots.includes(teamPlotId)) {
-        player.sendError("You already have a teammate's plot loaded. Unload it first.");
-        return false;
-    }
-
-    const dim = world.getDimension("overworld");
-
-    // Determine rotation based on plot number and saved state
-    const plotNumber = parseInt(plotKey.split("_")[1]);
-    const isTargetFlipped = plotNumber >= 14 && plotNumber <= 23;
-    const flippedDB = JSON.parse(world.getDynamicProperty("plots_flipped") || "{}");
-    const wasSavedFlipped = flippedDB[plot.owner_id];
-    let rotation = "0_degrees";
-    if (wasSavedFlipped !== undefined && isTargetFlipped !== wasSavedFlipped) {
-        rotation = "180_degrees";
-    }
-
-    // Load the structure
-    system.run(() => {
-        try {
-            const minX = Math.min(plotConfig.plotCords.from.x, plotConfig.plotCords.to.x);
-            const minY = Math.min(plotConfig.plotCords.from.y, plotConfig.plotCords.to.y);
-            const minZ = Math.min(plotConfig.plotCords.from.z, plotConfig.plotCords.to.z);
-            dim.runCommand(`structure load "${plot.owner_id}_plot" ${minX} ${minY} ${minZ} ${rotation}`);
-        } catch (e) { }
-    });
-
-    // Update plot data
-    plot.claimed_plot = plotKey;
-    plot.last_loaded = Date.now();
-    this.setPlot(plotId, plot);
-
-    // Set the appropriate plot reference for the player
-    if (plot.owner_id === player.id) {
-        this.setMyPlot(player, plotId);
-    } else {
-        this.setTeammatePlot(player, plotId);
-    }
-
-    // Add to active plots if not already there
-    if (!activeplots.includes(plotId)) {
-        activeplots.push(plotId);
-        world.setDynamicProperty("active_plots", JSON.stringify(activeplots));
-    }
-
-    // Set up the plot barriers and boundaries
-    this.fillAreaAPI(
-        dim,
-        {
-            x: plotConfig.plotCords.from.x,
-            y: plotConfig.plotCords.from.y + 99,
-            z: plotConfig.plotCords.from.z
-        },
-        {
-            x: plotConfig.plotCords.to.x,
-            y: plotConfig.plotCords.to.y + 1,
-            z: plotConfig.plotCords.to.z
-        },
-        "minecraft:barrier"
-    );
-
-    this.fillAreaAPI(dim,
-        {
-            x: plotConfig.closePlotCords.from.x,
-            y: plotConfig.closePlotCords.from.y,
-            z: plotConfig.closePlotCords.from.z
-        },
-        {
-            x: plotConfig.closePlotCords.to.x,
-            y: plotConfig.closePlotCords.to.y - 213,
-            z: plotConfig.closePlotCords.to.z
-        },
-        "minecraft:structure_void"
-    );
-
-    this.fillAreaAPI(
-        dim,
-        {
-            x: plotConfig.closePlotCords.from.x,
-            y: plotConfig.closePlotCords.from.y + 6,
-            z: plotConfig.closePlotCords.from.z
-        },
-        plotConfig.closePlotCords.to,
-        "minecraft:barrier"
-    );
-
-    this.updateFloatingText(plotKey, plot);
-
-    player.sendSuccess(`§aPlot loaded at ${plotKey}.`);
-    return true;
-}
 
     static unloadPlotOWNER(plotId, player = null) {
         const plot = this.getPlot(plotId);
@@ -446,34 +447,36 @@ static loadPlot(plotId, player, plotKey) {
         const maxY = Math.max(plotConfig.plotCords.from.y, plotConfig.plotCords.to.y);
         const maxZ = Math.max(plotConfig.plotCords.from.z, plotConfig.plotCords.to.z);
 
-        const tickingAreaName = `unload_${plotId}_${Date.now()}`;
-
+        const tickingAreaName = `unload_${plotId}}`;
+        const structureName = `mystructure:${plot.owner_id}_plot`
+        const from = { x: minX, y: minY, z: minZ };
+        const to = { x: maxX, y: maxY, z: maxZ };
         system.run(() => {
-            try {
-                dim.runCommand(`tickingarea add ${minX} ${minY} ${minZ} ${maxX} ${maxY} ${maxZ} "${tickingAreaName}"`);
-            } catch (e) { }
+            await world.tickingAreaManager.createTickingArea(tickingAreaName, {
+                dimension: dim,
+                from: from,
+                to: to
+            })
 
-            try {
-                dim.runCommand(`structure save "${plot.owner_id}_plot" ${minX} ${minY} ${minZ} ${maxX} ${maxY} ${maxZ} false disk`);
-            } catch (e) { }
+            const plotstructure = world.structureManager.get(`${structureName}`)
 
-            system.runTimeout(() => {
-                this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-                this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-                this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
+            if (plotstructure) {
+                world.structureManager.delete(`${structureName}`)
+            }
 
-                system.runTimeout(() => {
-                    this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-                    this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-
-                    this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
-
-                    try {
-                        dim.runCommand(`tickingarea remove "${tickingAreaName}"`);
-                    } catch (e) { }
-                }, 10);
-
-            }, 20);
+            world.structureManager.createFromWorld(`${structureName}`, dim, from, to,
+                {
+                    includeEntities: false,
+                    saveMode: StructureSaveMode.World
+                }
+            )
+            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
+            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
+            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
+            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
+            world.tickingAreaManager.removeTickingArea(tickingAreaName)
         });
 
         const index = activeplots.indexOf(plotId);
@@ -534,34 +537,35 @@ static loadPlot(plotId, player, plotKey) {
         const maxY = Math.max(plotConfig.plotCords.from.y, plotConfig.plotCords.to.y);
         const maxZ = Math.max(plotConfig.plotCords.from.z, plotConfig.plotCords.to.z);
 
-        const tickingAreaName = `unload_${plotId}_${Date.now()}`;
+        const tickingAreaName = `unload_${plotId}}`;
+        const from = { x: minX, y: minY, z: minZ };
+        const to = { x: maxX, y: maxY, z: maxZ };
 
         system.run(() => {
-            try {
-                dim.runCommand(`tickingarea add ${minX} ${minY} ${minZ} ${maxX} ${maxY} ${maxZ} "${tickingAreaName}"`);
-            } catch (e) { }
+            await world.tickingAreaManager.createTickingArea(tickingAreaName, {
+                dimension: dim,
+                from: from,
+                to: to
+            })
+            const plotstructure = world.structureManager.get(`${structureName}`)
 
-            try {
-                dim.runCommand(`structure save "${plot.owner_id}_plot" ${minX} ${minY} ${minZ} ${maxX} ${maxY} ${maxZ} false disk`);
-            } catch (e) { }
+            if (plotstructure) {
+                world.structureManager.delete(`${structureName}`)
+            }
 
-            system.runTimeout(() => {
-                this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-                this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-                this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
-
-                system.runTimeout(() => {
-                    this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
-                    this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
-
-                    this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
-
-                    try {
-                        dim.runCommand(`tickingarea remove "${tickingAreaName}"`);
-                    } catch (e) { }
-                }, 10);
-
-            }, 20);
+            world.structureManager.createFromWorld(`${structureName}`, dim, from, to,
+                {
+                    includeEntities: false,
+                    saveMode: StructureSaveMode.World
+                }
+            )
+            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
+            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            this.fillAreaAPI(dim, plotConfig.closePlotCords.from, plotConfig.closePlotCords.to, "minecraft:barrier");
+            this.fillAreaAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to, "minecraft:air");
+            this.setGrassFloorAPI(dim, plotConfig.plotCords.from, plotConfig.plotCords.to);
+            this.setFloatingText(dim, plotConfig.floatingTag, defaultClaimPlotText);
+            world.tickingAreaManager.removeTickingArea(tickingAreaName)
         });
 
         const index = activeplots.indexOf(plotId);
@@ -602,7 +606,6 @@ static loadPlot(plotId, player, plotKey) {
         player.sendSuccess(`Plot created with ID: ${plotId}`);
         return plotId;
     }
-
 
     static async addTeammate(player, plotId) {
         const plot = this.getPlot(plotId);
@@ -1280,12 +1283,12 @@ static loadPlot(plotId, player, plotKey) {
         const time = world.getTimeOfDay();
         const isPickupTime = time >= TimeOfDay.Sunrise || time < TimeOfDay.Sunset;
 
-    const blockLoc = block.location;
-    if (!this.canEditBlock(player, blockLoc, typeId.includes("autominer") ? "pickup_miner" : "pickup_gen")) {
-        player.sendError("You don't have permission to pick up this generator.");
-        player.playSound("random.break");
-        return;
-    }
+        const blockLoc = block.location;
+        if (!this.canEditBlock(player, blockLoc, typeId.includes("autominer") ? "pickup_miner" : "pickup_gen")) {
+            player.sendError("You don't have permission to pick up this generator.");
+            player.playSound("random.break");
+            return;
+        }
 
         function formatName(typeId) {
             const rawName = typeId.split(":")[1].replace("_gen", "");
